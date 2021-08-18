@@ -3,11 +3,13 @@ package lesson2;
 public class Main {
     public static void taskOne() {
         double dayNorm = 10;
+        double allDistance = 0;
         for (int i = 0; i < 7; i++) {
-            dayNorm = dayNorm + dayNorm * 10 / 100;
+            allDistance = allDistance + dayNorm;
+            dayNorm = dayNorm * 1.1;
         }
         //округлил до одного знака после запятой, думаю будет достаточно
-        System.out.printf("Task 1. Runners run %.1f km in 7 days \n", dayNorm);
+        System.out.printf("Task 1. Runners run %.1f km in 7 days \n", allDistance);
     }
 
     public static void taskTwo() {
@@ -49,6 +51,7 @@ public class Main {
         for (int i = 2; i <= 100; i += 2) {
             System.out.print(i + ", ");
         }
+        System.out.println();
     }
 
     public static void taskSeven() {
@@ -59,6 +62,32 @@ public class Main {
         System.out.println("Task 7 - " + result);
     }
 
+    public static void taskEight() {
+        System.out.println("Task 8:");
+        int a = 8;
+        for (int i = 0; i < a / 2; i++) {
+            for (int j = 0; j < a; j++) {
+                if (j <= a / 2 + i && j >= a / 2 - 1 - i) {
+                    System.out.print("* ");
+                } else {
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+        for (int i = a / 2 - 1; i >= 0; i--) {
+            for (int j = 0; j < a; j++) {
+                if (j <= a / 2 + i && j >= a / 2 - 1 - i) {
+                    System.out.print("* ");
+                } else {
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+
+    }
+
     public static void main(String[] args) {
         taskOne();
         taskTwo();
@@ -67,6 +96,6 @@ public class Main {
         taskFive();
         taskSix();
         taskSeven();
+        taskEight();
     }
-
 }

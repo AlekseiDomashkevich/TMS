@@ -44,4 +44,5 @@ public interface Storage<E> {
 
         return entities;
     }
+
 }

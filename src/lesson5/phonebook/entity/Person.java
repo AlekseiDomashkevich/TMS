@@ -1,5 +1,6 @@
 package lesson5.phonebook.entity;
 
+
 public class Person implements Entity {
     private Integer id;
     private String firstname;
@@ -11,6 +12,7 @@ public class Person implements Entity {
     public Person() {
     }
 
+
     public Person(Integer id) {
         this.id = id;
     }
@@ -20,6 +22,7 @@ public class Person implements Entity {
         this.firstname = columns[1];
         this.lastname = columns[2];
         this.age = Integer.parseInt(columns[3]);
+
         this.address = columns[4];
     }
 
@@ -31,6 +34,7 @@ public class Person implements Entity {
         this.age = Integer.parseInt(columns[3]);
         this.phoneNumber = columns[4];
         this.address = columns[5];
+
     }
 
     public Integer getId() {
@@ -61,6 +65,7 @@ public class Person implements Entity {
     }
 
     public void setAge(Integer age) {
+
         if (age < 0) {
             throw new IllegalArgumentException("Wrong age: " + age);
         }
@@ -75,6 +80,7 @@ public class Person implements Entity {
         this.address = address;
     }
 
+=
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -91,7 +97,9 @@ public class Person implements Entity {
                 ", lastname='" + lastname + '\'' +
                 ", age=" + age +
                 ", phoneNumber='" + phoneNumber + '\'' +
+
                 ", address='" + address + '\'' +
+
                 '}';
     }
 }

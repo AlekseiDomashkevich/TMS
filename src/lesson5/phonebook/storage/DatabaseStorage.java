@@ -1,5 +1,6 @@
 package lesson5.phonebook.storage;
 
+
 import lesson5.phonebook.marshaller.Marshaller;
 
 import java.util.List;
@@ -33,5 +34,6 @@ public class DatabaseStorage<E> extends BaseStorage implements Storage<E> {
     @Override
     public List<E> findAll() {
         return Storage.super.findAll();
+
     }
 }

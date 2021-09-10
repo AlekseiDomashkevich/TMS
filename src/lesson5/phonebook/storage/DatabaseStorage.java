@@ -1,10 +1,39 @@
 package lesson5.phonebook.storage;
 
-import lesson5.phonebook.entity.Person;
 
-public class DatabaseStorage implements Storage {
+import lesson5.phonebook.marshaller.Marshaller;
+
+import java.util.List;
+
+public class DatabaseStorage<E> extends BaseStorage implements Storage<E> {
     @Override
-    public void save(Person save) {
-        ;
+    public Class getEntityClass() {
+        return null;
+    }
+
+    @Override
+    public void setEntityClass(Class<E> clazz) {
+
+    }
+
+    @Override
+    public void setMarshaller(Marshaller marshaller) {
+
+    }
+
+    @Override
+    public String getFilePath() {
+        return null;
+    }
+
+    @Override
+    public void save(Object save) {
+
+    }
+
+    @Override
+    public List<E> findAll() {
+        return Storage.super.findAll();
+
     }
 }

@@ -1,6 +1,5 @@
 package lesson5.phonebook.storage;
 
-
 import lesson5.phonebook.marshaller.Marshaller;
 
 import java.io.FileOutputStream;

@@ -45,4 +45,3 @@ public class FileStorage<E> implements Storage<E> {
             e.printStackTrace();
         }
     }
-}

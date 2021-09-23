@@ -2,14 +2,25 @@ package lesson5.phonebook.marshaller;
 
 import lesson5.phonebook.entity.Person;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 public class PersonMarshaller implements Marshaller {
-    private OutputStream fout;
+    private FileOutputStream fout;
 
-    public void setStream(OutputStream fin) {
+    @Override
+    public void appendProcess(Object entity) throws IOException {
+        var person = (Person) entity;
+        var ois = new AppendObjectOutputStream(fout);
+        ois.writeObject(person);
+        ois.flush();
+
+    }
+
+    @Override
+    public void setStream(FileOutputStream fin) {
         this.fout = fin;
     }
 
@@ -19,7 +30,8 @@ public class PersonMarshaller implements Marshaller {
         var ois = new ObjectOutputStream(fout);
         ois.writeObject(person);
         ois.flush();
-        ois.close();
+//        ois.close();
+
 
 
 
@@ -36,4 +48,5 @@ public class PersonMarshaller implements Marshaller {
 //        fin.write(person.getAddress().getBytes(StandardCharsets.UTF_8));
 //        fin.write("\n".getBytes(StandardCharsets.UTF_8));
     }
+
 }

@@ -6,8 +6,11 @@ import lesson5.phonebook.entity.Person;
 import lesson5.phonebook.storage.Storage;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class PhonebookDAO {
     private final List<Storage<Person>> storages;
@@ -15,6 +18,18 @@ public class PhonebookDAO {
     public PhonebookDAO(List<Storage<Person>> storages) {
         this.storages = storages;
     }
+
+    public List<Person> findBy(Predicate<Person> predicate) {
+        List<Person> result = new ArrayList<>();
+        var personList = this.findAll();
+        personList.forEach(person -> {
+            if (predicate.test(person)) {
+                result.add(person);
+            }
+        });
+        return result;
+    }
+
 
     private void saveAll(Person[] people) {
         this.deleteFile();
@@ -37,6 +52,7 @@ public class PhonebookDAO {
             while (true){
                 try{
                     person =(Person) ois.readObject();
+
                     if(person.getLastname().equals(lastname)){
                         return person;
                     }
@@ -108,8 +124,41 @@ public class PhonebookDAO {
         }
     }
 
+    public void saveIndex(){
+
+        var personList = this.findAll();
+        var map = new HashMap<Integer, String>();
+        for(Person person : personList){
+            map.put(person.getId(), person.getLastname());
+        }
+        ObjectOutputStream ous = null;
+        try {
+            ous = new ObjectOutputStream(new FileOutputStream("./Index.txt", true));
+            ous.writeObject(map);
+            ous.flush();
+            ous.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+    }
+
     public List<Person> findAll() {
         return this.storages.get(0).findAll();
 
+    }
+
+    public String findByIndex(int id) {
+        ObjectInputStream ois = null;
+        HashMap<Integer, String> personMap;
+        try {
+            ois = new ObjectInputStream(new FileInputStream("./Index.txt"));
+            personMap =(HashMap<Integer, String>) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+        return personMap.get(id);
     }
 }

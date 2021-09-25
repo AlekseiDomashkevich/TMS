@@ -1,6 +1,8 @@
 package lesson5.phonebook.entity;
 
-public class Person implements Entity {
+import java.io.Serializable;
+
+public class Person implements Entity, Serializable {
     private Integer id;
     private String firstname;
     private String lastname;

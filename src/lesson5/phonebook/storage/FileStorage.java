@@ -1,9 +1,13 @@
 package lesson5.phonebook.storage;
 
+import lesson5.phonebook.entity.Entity;
+import lesson5.phonebook.entity.Person;
 import lesson5.phonebook.marshaller.Marshaller;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
 public class FileStorage<E> implements Storage<E> {
     private String filePath;
@@ -39,7 +43,8 @@ public class FileStorage<E> implements Storage<E> {
         try (var fin = new FileOutputStream(this.filePath, true)) {
             this.marshaller.setStream(fin);
             this.marshaller.process(person);
-            fin.flush();
+//            fin.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

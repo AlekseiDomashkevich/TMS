@@ -32,6 +32,7 @@ public class PhonebookController implements IController {
             }
             case "call" -> {
                 var person = dao.findByLastname(arguments.get(1));
+                System.out.println(person);
                 //person.getPhoneNumber();
             }
             case "delete" -> {
@@ -44,6 +45,13 @@ public class PhonebookController implements IController {
                 } else {
                     System.err.println("Person not found");
                 }
+            }
+            case "list" -> {
+               List<Person> list =  dao.findAll();
+               for (Person person : list){
+                   System.out.println(person);
+               }
+
             }
         }
     }

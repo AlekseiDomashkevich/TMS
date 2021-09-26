@@ -2,18 +2,23 @@ package lesson12.controller;
 
 import lesson12.ProductSorter;
 import lesson12.Store;
-import lesson12.entity.Product;
+import lesson12.storage.FileStorage;
+import lesson12.view.CommandLineView;
+import lesson12.view.View;
 
-import java.util.Collections;
 import java.util.Scanner;
 
 public class CommandLineController implements IController {
     private Scanner scanner;
     private Store store;
+    private View view;
 
     public CommandLineController() {
         this.scanner = new Scanner(System.in);
         this.store = new Store();
+        store.setFilePath("./Store.out");
+        store.setStorage(new FileStorage());
+        this.view = new CommandLineView();
     }
 
     private int scanId() {
@@ -59,58 +64,45 @@ public class CommandLineController implements IController {
             switch (scanner.nextLine()) {
                 case "1" -> {
                     var id = scanId();
-                    var name = scanName();
-                    var price = scanPrice();
-                    store.addProduct(new Product(id, name, price));
-                    System.out.printf("Продукт с ID %d добавлен\n\n", id);
+                    if (store.getProduct(id) == null) {
+                        store.addProduct(id, scanName(), scanPrice());
+                        System.out.printf("Продукт с ID %d добавлен\n\n", id);
+                    } else {
+                        System.out.printf("Продукт с ID %d уже существует!\n\n", id);
+                    }
+
                 }
                 case "2" -> {
                     if (store.getAllProduct().size() == 0) {
                         System.out.println("Список товаров пуст\n");
                     } else {
-                        System.out.println("Выберите как отсортировать список товаров");
-                        System.out.println("" +
-                                "1 - По цене, сначала дешевые. " +
-                                "2 - По цене, сначала дорогие. " +
-                                "3 - По добавлению, сначала новые. " +
-                                "4 - По добавлению, сначала старые");
+                        System.out.println("Выберите как отсортировать список товаров:");
+                        System.out.println("""
+                                1 - По цене, сначала дешевые.
+                                2 - По цене, сначала дорогие.
+                                3 - По добавлению, сначала новые.
+                                4 - По добавлению, сначала старые.
+                                5 - По изменению, сначала новые.
+                                6 - По изменению, сначала старые.
+                                """);
                         var sorter = new ProductSorter(store);
                         switch (scanner.nextLine()) {
-                            case "1" -> {
-                                System.out.println("Список товаров:");
-                                sorter.sortByPriceFromMinToMax().forEach(System.out::println);
-                                System.out.println();
-                            }
-                            case "2" -> {
-                                System.out.println("Список товаров:");
-                                sorter.sortByPriceFromMaxToMin().forEach(System.out::println);
-                                System.out.println();
-                            }
-                            case "3" -> {
-                                System.out.println("Список товаров:");
-                                var list = store.getAllProduct();
-                                Collections.reverse(list);
-                                list.forEach(System.out::println);
-                                System.out.println();
-                            }
-                            case "4" -> {
-                                System.out.println("Список товаров:");
-                                store.getAllProduct().forEach(System.out::println);
-                                System.out.println();
-                            }
+                            case "1" -> view.printProduct(sorter.sortByPriceFromMinToMax());
+                            case "2" -> view.printProduct(sorter.sortByPriceFromMaxToMin());
+                            case "3" -> view.printProduct(sorter.sortByCreateTimeFromNewToOld());
+                            case "4" -> view.printProduct(sorter.sortByCreateTImeFromOldToNew());
+                            case "5" -> view.printProduct(sorter.sortByEditTimeFromNewToOld());
+                            case "6" -> view.printProduct(sorter.sortByEditTimeFromOldToNew());
                             default -> System.out.println("Неверное значение, попробуйте еще раз!\n");
                         }
                     }
-
                 }
                 case "3" -> {
                     var id = scanId();
                     if (store.getProduct(id) != null) {
-                        var name = scanName();
-                        var price = scanPrice();
-                        store.editProduct(new Product(id, name, price));
+                        store.editProduct(id, scanName(), scanPrice());
                         System.out.printf("Товар с ID %d отредактирован.\n", id);
-                    }else {
+                    } else {
                         System.out.printf("Товар с ID %d не найден в базе.\n", id);
                     }
 
@@ -120,8 +112,7 @@ public class CommandLineController implements IController {
                     if (store.getProduct(id) != null) {
                         store.deleteProduct(id);
                         System.out.printf("Товар с ID %d удален.\n\n", id);
-                    }
-                    else {
+                    } else {
                         System.out.printf("Товар с ID %d не найден в базе.\n\n", id);
                     }
 

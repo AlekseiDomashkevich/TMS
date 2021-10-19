@@ -1,7 +1,6 @@
 package lesson5.phonebook.controller;
 
 
-
 import lesson5.phonebook.dao.PhonebookDAO;
 import lesson5.phonebook.entity.Person;
 import lesson5.phonebook.mapper.PersonMapper;
@@ -20,10 +19,19 @@ public class PhonebookController implements IController {
 
         var dao = new PhonebookDAO(Collections.singletonList(storage));
         switch (arguments.get(0).replace("phonebook/", "")) {
+            case "getIndex" -> {
+                var currentTime = System.currentTimeMillis();
+                System.out.println(dao.findByIndex(Integer.parseInt(arguments.get(1))));
+                System.out.println(System.currentTimeMillis() - currentTime);
+
+            }
+            case "index" -> {
+                dao.saveIndex();
+            }
             case "generate" -> {
                 var mapper = new PersonMapper();
-                for (int i = 0; i < 15; i++) {
-                    dao.save(mapper.toEntity(arguments));
+                for (int i = 0; i < 150; i++) {
+                    dao.save(mapper.toEntity2(arguments));
                 }
             }
             case "save" -> {
@@ -31,8 +39,10 @@ public class PhonebookController implements IController {
                 dao.save(mapper.toEntity(arguments));
             }
             case "call" -> {
+                var currentTime = System.currentTimeMillis();
                 var person = dao.findByLastname(arguments.get(1));
                 System.out.println(person);
+                System.out.println(System.currentTimeMillis() - currentTime);
                 //person.getPhoneNumber();
             }
             case "delete" -> {
@@ -47,11 +57,15 @@ public class PhonebookController implements IController {
                 }
             }
             case "list" -> {
-               List<Person> list =  dao.findAll();
-               for (Person person : list){
-                   System.out.println(person);
-               }
+                List<Person> list = dao.findAll();
+                for (Person person : list) {
+                    System.out.println(person);
+                }
 
+            }
+            case "find_by_phone" -> {
+                var personList = dao.findBy(person -> person.getPhoneNumber().startsWith(arguments.get(1)));
+                personList.forEach(System.out::println);
             }
         }
     }

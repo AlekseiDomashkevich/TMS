@@ -1,15 +1,25 @@
 package lesson12.entity;
 
-public class Product {
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Product implements Serializable {
     private Integer id;
     private String name;
     private Integer price;
+    private LocalDateTime createTime;
+    private LocalDateTime editTime;
+
 
     public Product(Integer id, String name, Integer price) {
         this.id = id;
         this.name = name;
         this.price = price;
+        createTime = LocalDateTime.now();
     }
+
+
 
     public Integer getId() {
         return id;
@@ -35,10 +45,24 @@ public class Product {
         this.price = price;
     }
 
+    public LocalDateTime getEditTime(){
+        return this.editTime;
+    }
+
+    public void setEditTime(LocalDateTime editTime){
+        this.editTime = editTime;
+    }
+
+    public LocalDateTime getCreateTime(){
+        return this.createTime;
+    }
+
     @Override
     public String toString() {
         return "ID = " + id +
                 ", название ='" + name + '\'' +
-                ", цена = " + price;
+                ", цена = " + price +
+                ", дата создания = " + createTime +
+                ", дата последнего изменения = " + editTime;
     }
 }

@@ -4,6 +4,7 @@ import lesson5.phonebook.entity.Entity;
 import lesson5.phonebook.entity.Person;
 import lesson5.phonebook.marshaller.Marshaller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -40,9 +41,21 @@ public class FileStorage<E> implements Storage<E> {
 
     @Override
     public void save(Object person) {
-        try (var fin = new FileOutputStream(this.filePath, true)) {
-            this.marshaller.setStream(fin);
-            this.marshaller.process(person);
+        File file = new File(this.filePath);
+        try  {
+
+
+            if(file.exists()){
+                var fin = new FileOutputStream(file, true);
+                this.marshaller.setStream(fin);
+                this.marshaller.appendProcess(person);
+            }else {
+                var fin = new FileOutputStream(file);
+                this.marshaller.setStream(fin);
+                this.marshaller.process(person);
+
+            }
+
 //            fin.flush();
 
         } catch (IOException e) {

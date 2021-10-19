@@ -22,4 +22,14 @@ public class PersonMapper {
         person.setAddress(args.get(ADDRESS_INDEX));
         return person;
     }
+
+    public Person toEntity2(List<String> args) {
+        var person = new Person(new Random().nextInt(100_000));
+        person.setFirstname(args.get(FIRSTNAME_INDEX));
+        person.setLastname(args.get(LASTNAME_INDEX));
+        person.setAge(Integer.parseInt(args.get(AGE_INDEX)));
+        person.setPhoneNumber(args.get(PHONE_NUMBER_INDEX) + new Random().nextInt(20));
+        person.setAddress(args.get(ADDRESS_INDEX));
+        return person;
+    }
 }

@@ -23,13 +23,14 @@ public interface Storage<E> {
 
     default List<E> findAll() {
         var entities = new LinkedList<E>();
-        try(var ois = new ObjectInputStream(new FileInputStream("./phonebook.txt"))) {
+        try (var ois = new ObjectInputStream(new FileInputStream("./phonebook.txt"))) {
             E p;
 
-            while ((p =  (E) ois.readObject()) != null){
+            while ((p = (E) ois.readObject()) != null) {
                 entities.add(p);
 
             }
+        } catch (EOFException ignored) {
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

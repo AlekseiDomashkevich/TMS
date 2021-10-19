@@ -21,10 +21,32 @@ public class ProductSorter {
     }
 
     public ArrayList<Product> sortByPriceFromMaxToMin() {
-        var list = (ArrayList<Product>) store.getAllProduct().stream()
-                .sorted(Comparator.comparing(Product::getPrice))
+       return (ArrayList<Product>) store.getAllProduct().stream()
+               .sorted(Collections.reverseOrder(Comparator.comparing(Product::getPrice)))
+               .collect(Collectors.toList());
+    }
+
+    public ArrayList<Product> sortByCreateTimeFromNewToOld(){
+       return  (ArrayList<Product>) store.getAllProduct().stream()
+                .sorted(Comparator.comparing(Product::getCreateTime))
                 .collect(Collectors.toList());
-        Collections.reverse(list);
-        return list;
+    }
+
+    public ArrayList<Product> sortByCreateTImeFromOldToNew(){
+        return  (ArrayList<Product>) store.getAllProduct().stream()
+                .sorted(Collections.reverseOrder(Comparator.comparing(Product::getCreateTime)))
+                .collect(Collectors.toList());
+    }
+
+    public ArrayList<Product> sortByEditTimeFromNewToOld(){
+        return  (ArrayList<Product>) store.getAllProduct().stream()
+                .sorted(Comparator.comparing(Product::getEditTime))
+                .collect(Collectors.toList());
+    }
+
+    public ArrayList<Product> sortByEditTimeFromOldToNew(){
+        return (ArrayList<Product>) store.getAllProduct().stream()
+                .sorted(Collections.reverseOrder(Comparator.comparing(Product::getEditTime)))
+                .collect(Collectors.toList());
     }
 }

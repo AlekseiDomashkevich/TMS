@@ -11,7 +11,7 @@ public class ApplicationMarshaller implements Marshaller {
     private OutputStream fout;
 
     @Override
-    public void setStream(OutputStream fin) {
+    public void setStream(FileOutputStream fin) {
         this.fout = fin;
     }
 
@@ -33,5 +33,10 @@ public class ApplicationMarshaller implements Marshaller {
 //        fin.write("/".getBytes(StandardCharsets.UTF_8));
 //        fin.write(application.getStatus().toString().getBytes(StandardCharsets.UTF_8));
 //        fin.write("\n".getBytes(StandardCharsets.UTF_8));
+    }
+
+    @Override
+    public void appendProcess(Object entity) throws IOException {
+
     }
 }

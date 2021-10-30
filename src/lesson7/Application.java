@@ -1,6 +1,6 @@
 package lesson7;
 
-import lesson7.entity.Computer;
+import lesson7.entity.*;
 
 import java.util.Random;
 import java.util.Scanner;

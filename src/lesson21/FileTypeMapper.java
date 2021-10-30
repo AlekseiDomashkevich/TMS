@@ -2,11 +2,10 @@ package lesson21;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
+
 
 public class FileTypeMapper {
     private OutputStream outputStream;
@@ -31,7 +30,6 @@ public class FileTypeMapper {
     //не стал маппить все типы данных, для теста сделал несколько из тех что у меня на "сервере"
     //думаю для понимания достаточно
     private String getContentType(File file) {
-        System.out.println(file.getName());
         var fileNameWords = file.getName().split("\\.");
         var suffix = fileNameWords[fileNameWords.length - 1];
         switch (suffix) {

@@ -25,6 +25,7 @@ public class SocketProcessor implements Runnable {
             File file = new File(file0, doRequest());
             if (file.exists()) {
                 doResponse(file);
+                socket.close();
             }
 
         } catch (Throwable exception) {
@@ -37,6 +38,7 @@ public class SocketProcessor implements Runnable {
         String result = reader.readLine();
         var res = result.split(" ");
         result = res[1].substring(1);
+        System.out.println(result);
         return result;
     }
 
